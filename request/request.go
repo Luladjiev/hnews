@@ -5,11 +5,18 @@ import (
 	"strconv"
 )
 
-const (
-	apiURL  = "https://hacker-news.firebaseio.com/v0/"
-	itemURL = apiURL + "item/"
-	userURL = apiURL + "user/"
+var (
+	apiURL  = "https://hacker-news.firebaseio.com/v0"
+	itemURL = apiURL + "/item/"
+	userURL = apiURL + "/user/"
 )
+
+// SetAPIURL set's the base and rest of the URLs
+func SetAPIURL(url string) {
+	apiURL = url
+	itemURL = apiURL + "/item/"
+	userURL = apiURL + "/user/"
+}
 
 // GetItemURL returns a request ready url for a specific item
 func GetItemURL(id int) string {

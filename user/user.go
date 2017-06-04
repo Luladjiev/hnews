@@ -2,6 +2,8 @@ package user
 
 import (
 	"encoding/json"
+	"errors"
+	"net/http"
 
 	"github.com/luladjiev/hnews/request"
 )
@@ -24,16 +26,24 @@ func Get(id string) (Data, error) {
 
 	response, err := request.Get(url)
 
-	defer response.Body.Close()
-
 	if err != nil {
 		return result, err
+	}
+
+	defer response.Body.Close()
+
+	if response.StatusCode != http.StatusOK {
+		return result, errors.New("server error")
 	}
 
 	err = json.NewDecoder(response.Body).Decode(&result)
 
 	if err != nil {
 		return result, err
+	}
+
+	if result.ID == "" {
+		return result, errors.New("invalid response data")
 	}
 
 	return result, nil
