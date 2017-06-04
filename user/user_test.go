@@ -9,22 +9,6 @@ import (
 	"github.com/luladjiev/hnews/request"
 )
 
-func TestGetWrongResponseStatus(t *testing.T) {
-	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusServiceUnavailable)
-	}))
-
-	request.SetAPIURL(ts.URL)
-
-	defer ts.Close()
-
-	_, err := Get("luladjiev")
-
-	if err == nil {
-		t.Errorf("Get() didn't check server status code")
-	}
-}
-
 func TestGetWrongResponseData(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)

@@ -3,7 +3,6 @@ package user
 import (
 	"encoding/json"
 	"errors"
-	"net/http"
 
 	"github.com/luladjiev/hnews/request"
 )
@@ -31,10 +30,6 @@ func Get(id string) (Data, error) {
 	}
 
 	defer response.Body.Close()
-
-	if response.StatusCode != http.StatusOK {
-		return result, errors.New("server error")
-	}
 
 	err = json.NewDecoder(response.Body).Decode(&result)
 

@@ -1,6 +1,7 @@
 package request
 
 import (
+	"errors"
 	"net/http"
 	"strconv"
 )
@@ -33,6 +34,10 @@ func Get(url string) (*http.Response, error) {
 	response, err := http.Get(url)
 	if err != nil {
 		return response, err
+	}
+
+	if response.StatusCode != http.StatusOK {
+		return response, errors.New("server error")
 	}
 
 	return response, nil
