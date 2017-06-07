@@ -32,6 +32,7 @@ func TestSetAPIURL(t *testing.T) {
 	for _, url := range allURLs {
 		if strings.HasPrefix(url, "test.com") != true {
 			t.Errorf("SetAPIURL() didn't set URL correctly")
+			break
 		}
 	}
 
